@@ -45,8 +45,6 @@ services:
     image: mariadb:10
     volumes:
       - ./nextcloud/db:/var/lib/mysql
-    expose:
-      - "3306"
     environment:
       - MYSQL_ROOT_PASSWORD=1234567890abc
       - MYSQL_DATABASE=nextcloud

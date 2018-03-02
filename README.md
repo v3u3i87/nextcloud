@@ -1,5 +1,10 @@
 # nextcloud
 
+## 添加执行权限
+chmod +x test.sh
+## 开始执行
+./test.sh
+
 #配置镜像虚拟网络
 docker create network nextcloud
 
