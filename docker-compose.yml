@@ -1,4 +1,9 @@
 version: '2'
+
+networks:
+  default:
+    driver: bridge
+
 services:
   nextcloud:
     image: wonderfall/nextcloud
@@ -6,6 +11,10 @@ services:
       - nextcloud-db:nextcloud-db   # If using MySQL
       - solr:solr                   # If using Nextant
       - redis:redis                 # If using Redis
+  #depends_on:
+  #    - nextcloud-db           # If using MySQL
+  #    - solr                   # If using Nextant
+  #    - redis                  # If using Redis
     environment:
       - UID=1000
       - GID=1000
@@ -13,34 +22,36 @@ services:
       - APC_SHM_SIZE=128M
       - OPCACHE_MEM_SIZE=128
       - CRON_PERIOD=15m
-      - TZ=Europe/Berlin
+      - TZ=Asia/Shanghai
       - ADMIN_USER=admin            # Don't set to configure through browser
       - ADMIN_PASSWORD=admin        # Don't set to configure through browser
-      - DOMAIN=laurt.com
+      - DOMAIN=localhost
       - DB_TYPE=mysql
       - DB_NAME=nextcloud
       - DB_USER=nextcloud
-      - DB_PASSWORD=..maoqiang
+      - DB_PASSWORD=1234567890abc
       - DB_HOST=nextcloud-db
     volumes:
-      - /Users/z/works/docker/nextcloud/data:/data
-      - /Users/z/works/docker/nextcloud/config:/config
-      - /Users/z/works/docker/nextcloud/apps:/apps2
-      - /Users/z/works/docker/nextcloud/themes:/nextcloud/themes
+      - ./nextcloud/data:/data
+      - ./nextcloud/config:/config
+      - ./nextcloud/apps:/apps2
+      - ./nextcloud/themes:/nextcloud/themes
     ports:
-      - "9999:9999"
+      - "8888:80"
 
 
   # If using MySQL
   nextcloud-db:
     image: mariadb:10
     volumes:
-      - /Users/z/works/docker/nextcloud/db:/var/lib/mysql
+      - ./nextcloud/db:/var/lib/mysql
+    expose:
+      - "3306"
     environment:
-      - MYSQL_ROOT_PASSWORD=..maoqiang
+      - MYSQL_ROOT_PASSWORD=1234567890abc
       - MYSQL_DATABASE=nextcloud
       - MYSQL_USER=nextcloud
-      - MYSQL_PASSWORD=..maoqiang
+      - MYSQL_PASSWORD=1234567890abc
 
 
   # If using Nextant
@@ -48,7 +59,7 @@ services:
     image: solr:6-alpine
     container_name: solr
     volumes:
-      - /Users/z/works/docker/nextcloud/solr:/opt/solr/server/solr/mycores
+      - ./nextcloud/solr:/opt/solr/server/solr/mycores
     entrypoint:
       - docker-entrypoint.sh
       - solr-precreate
@@ -60,4 +71,4 @@ services:
     image: redis:alpine
     container_name: redis
     volumes:
-      - /Users/z/works/docker/nextcloud/redis:/data
+      - ./nextcloud/redis:/data
