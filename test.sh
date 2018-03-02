@@ -6,7 +6,7 @@ docker kill $(docker ps -a -q) && docker rm `docker ps -a -q`
 
 echo "清空docker容器"
 
-DELDIR='~/works/docker/nextcloud/'
+DELDIR='/'
 
 rm -rf $DELDIR'data'
 rm -rf $DELDIR'apps'
