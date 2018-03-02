@@ -1,10 +1,13 @@
 #!/bin/bash
 
 echo "重新开发调试.."
+docker ps
+
+echo "清空docker容器"
 
 docker kill $(docker ps -a -q) && docker rm `docker ps -a -q`
 
-echo "清空docker容器"
+
 
 DELDIR=''
 
