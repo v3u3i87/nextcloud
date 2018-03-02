@@ -14,7 +14,6 @@ rm -rf data
 rm -rf apps
 rm -rf config
 rm -rf db
-rm -rf nextcloud
 rm -rf redis
 rm -rf solr
 rm -rf themes
@@ -25,7 +24,6 @@ mkdir -p data
 mkdir -p apps
 mkdir -p config
 mkdir -p db
-mkdir -p nextcloud
 mkdir -p redis
 mkdir -p solr
 mkdir -p themes
