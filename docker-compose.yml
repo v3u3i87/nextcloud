@@ -11,10 +11,6 @@ services:
       - nextcloud-db:nextcloud-db   # If using MySQL
       - solr:solr                   # If using Nextant
       - redis:redis                 # If using Redis
-  #depends_on:
-  #    - nextcloud-db           # If using MySQL
-  #    - solr                   # If using Nextant
-  #    - redis                  # If using Redis
     environment:
       - UID=1000
       - GID=1000
@@ -32,10 +28,10 @@ services:
       - DB_PASSWORD=1234567890abc
       - DB_HOST=nextcloud-db
     volumes:
-      - /data:/data
-      - /config:/config
-      - /apps:/apps2
-      - /themes:/nextcloud/themes
+      - ./data:/data
+      - ./config:/config
+      - ./apps:/apps2
+      - ./themes:/nextcloud/themes
     ports:
       - "8888:80"
 
@@ -44,7 +40,7 @@ services:
   nextcloud-db:
     image: mariadb:10
     volumes:
-      - /db:/var/lib/mysql
+      - ./db:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=1234567890abc
       - MYSQL_DATABASE=nextcloud
@@ -57,7 +53,7 @@ services:
     image: solr:6-alpine
     container_name: solr
     volumes:
-      - /solr:/opt/solr/server/solr/mycores
+      - ./solr:/opt/solr/server/solr/mycores
     entrypoint:
       - docker-entrypoint.sh
       - solr-precreate
@@ -69,4 +65,4 @@ services:
     image: redis:alpine
     container_name: redis
     volumes:
-      - /redis:/data
+      - ./redis:/data
